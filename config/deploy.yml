@@ -1,0 +1,43 @@
+# Kamal deployment configuration for OpenWebUI
+
+service: openwebui
+image: ghcr.io/open-webui/open-webui:latest
+
+servers:
+  web:
+    hosts:
+      - <VPS_IP_ADDRESS>
+    user: <VPS_SSH_USER>
+    options:
+      ssh_options: -o StrictHostKeyChecking=no
+
+env:
+  clear:
+    OPENWEBUI_PORT: 8080
+    DATABASE_URL: postgres://<DB_USER>:<DB_PASSWORD>@<VPS_IP_ADDRESS>:5432/<DB_NAME>
+    WEBUI_SECRET_KEY: <GENERATE_RANDOM_SECRET>
+    OLLAMA_BASE_URL: http://localhost:11434
+    # Optional: Add LLM provider settings
+    # OPENAI_API_KEY: <YOUR_API_KEY>
+
+registry:
+  server: ghcr.io
+  username: <GITHUB_USERNAME>
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+
+volumes:
+  - /data/openwebui:/app/backend/data
+
+ports:
+  - "8080:8080"
+
+health_check:
+  cmd: curl -f http://localhost:8080/api/v1/health || exit 1
+  interval: 30s
+  timeout: 5s
+  retries: 3
+  start_period: 40s
