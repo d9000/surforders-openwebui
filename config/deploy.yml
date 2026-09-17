@@ -1,6 +1,7 @@
 # Kamal 2 does not load .kamal/secrets into ENV before ERB runs.
 # Load .env for local deploys; CI sets the same vars from GitHub Secrets.
-<% root = Dir.pwd
+<% require "uri"
+   root = Dir.pwd
    [ File.join(root, ".env"), File.join(root, ".kamal", "secrets") ].each do |path|
      next unless File.file?(path)
 
@@ -15,6 +16,7 @@
        ENV[k] = v if ENV[k].to_s.strip.empty?
      end
    end
+   encoded_postgres_password = URI.encode_www_form_component(ENV.fetch("POSTGRES_PASSWORD"))
 %>
 service: openwebui
 
@@ -43,7 +45,7 @@ registry:
 env:
   clear:
     # Kamal accessory DNS name is {service}-{accessory} on the kamal Docker network.
-    DATABASE_URL: "postgresql://openwebui:<%= ENV['POSTGRES_PASSWORD'] %>@openwebui-db:5432/openwebui"
+    DATABASE_URL: "postgresql://openwebui:<%= encoded_postgres_password %>@openwebui-db:5432/openwebui"
     OPENWEBUI_PORT: "8080"
   secret:
     - WEBUI_SECRET_KEY

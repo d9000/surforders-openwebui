@@ -32,13 +32,14 @@ Production secrets live in **GitHub** (repository or `production` environment se
 |--------|---------|
 | `SSH_PRIVATE_KEY` | VPS SSH key |
 | `DEPLOY_HOST` | VPS hostname/IP |
+| `DEPLOY_HOST_KEY` | SSH known_hosts entry for the VPS |
 | `DEPLOY_USER` | SSH user (e.g. `ubuntu`) |
 | `DOCKER_HUB_USER` | Registry username |
 | `DOCKER_HUB_TOKEN` | Registry token |
 | `POSTGRES_PASSWORD` | Postgres + OpenWebUI DB password |
 | `WEBUI_SECRET_KEY` | OpenWebUI secret key for sessions |
 
-`POSTGRES_PASSWORD` is the single source of truth for database credentials.
+`POSTGRES_PASSWORD` is the single source of truth for production database credentials. For local `docker compose`, keep the default `DATABASE_URL` or provide a fully formed, URL-encoded override.
 
 ### 2. Deploy
 
