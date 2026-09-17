@@ -70,7 +70,7 @@ The workflow:
 2. Installs Ruby and Kamal 2.3.0
 3. Loads the SSH key
 4. Validates the rendered Kamal config
-5. Runs `./bin/deploy`
+5. Runs `kamal deploy`
 
 ## Verification
 
