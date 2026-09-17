@@ -26,7 +26,7 @@ This repository now follows the same deployment shape as the Surforders Odoo rep
 - `POSTGRES_PASSWORD`
 - `WEBUI_SECRET_KEY`
 
-`POSTGRES_PASSWORD` is used both by the PostgreSQL accessory and by OpenWebUI's `DATABASE_URL`.
+`POSTGRES_PASSWORD` is used both by the PostgreSQL accessory and by OpenWebUI's `DATABASE_PASSWORD`.
 `DEPLOY_HOST_KEY` should be the exact `known_hosts` line for the VPS, so CI does not trust a host key fetched at deploy time.
 
 ## VPS preparation

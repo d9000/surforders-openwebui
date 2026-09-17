@@ -39,7 +39,7 @@ Production secrets live in **GitHub** (repository or `production` environment se
 | `POSTGRES_PASSWORD` | Postgres + OpenWebUI DB password |
 | `WEBUI_SECRET_KEY` | OpenWebUI secret key for sessions |
 
-`POSTGRES_PASSWORD` is the single source of truth for production database credentials. For local `docker compose`, keep the default `DATABASE_URL` or provide a fully formed, URL-encoded override.
+`POSTGRES_PASSWORD` is the single source of truth for production database credentials.
 
 ### 2. Deploy
 
@@ -72,6 +72,8 @@ OPENWEBUI_URL=https://openwebui.surforders.com
 cp .env.example .env
 docker compose up -d
 ```
+
+The local stack passes `DATABASE_TYPE`, `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_USER`, `DATABASE_PASSWORD`, and `DATABASE_NAME` directly to OpenWebUI so the app and Postgres stay in sync.
 
 ## Teardown
 
