@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ -z "${DATABASE_PASSWORD:-}" && -n "${POSTGRES_PASSWORD:-}" ]]; then
+  export DATABASE_PASSWORD="${POSTGRES_PASSWORD}"
+fi
+
 db_vars=(
   DATABASE_TYPE
   DATABASE_HOST
@@ -44,4 +48,4 @@ if [[ "${OPENWEBUI_START_WRAPPER_SELFTEST:-0}" == "1" ]]; then
   exit 0
 fi
 
-exec bash start.sh
+exec "$@"

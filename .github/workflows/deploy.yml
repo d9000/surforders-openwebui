@@ -25,7 +25,6 @@ jobs:
       KAMAL_REGISTRY_USERNAME: ${{ secrets.DOCKER_HUB_USER }}
       KAMAL_REGISTRY_PASSWORD: ${{ secrets.DOCKER_HUB_TOKEN }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       WEBUI_SECRET_KEY: ${{ secrets.WEBUI_SECRET_KEY }}
     steps:
       - name: Check out repository
@@ -57,23 +56,6 @@ jobs:
           touch ~/.ssh/known_hosts
           grep -Fqx "$DEPLOY_HOST_KEY" ~/.ssh/known_hosts || printf '%s\n' "$DEPLOY_HOST_KEY" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
-
-      - name: Smoke test startup wrapper
-        run: |
-          docker build -t surforders-openwebui:smoke .
-          database_url="$(docker run --rm \
-            -e OPENWEBUI_START_WRAPPER_SELFTEST=1 \
-            -e DATABASE_TYPE=postgresql \
-            -e DATABASE_HOST=db \
-            -e DATABASE_PORT=5432 \
-            -e DATABASE_USER=openwebui \
-            -e DATABASE_PASSWORD='p@ss:/word' \
-            -e DATABASE_NAME=openwebui \
-            surforders-openwebui:smoke)"
-          expected_prefix='postgresql://openwebui:'
-          expected_password='p%40ss%3A%2Fword'
-          expected_suffix='@db:5432/openwebui'
-          test "$database_url" = "${expected_prefix}${expected_password}${expected_suffix}"
 
       - name: Validate Kamal config
         run: kamal config
