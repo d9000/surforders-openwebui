@@ -21,7 +21,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: "${DATABASE_URL:-postgresql://openwebui:openwebui@db:5432/openwebui}"
+      DATABASE_TYPE: "postgresql"
+      DATABASE_HOST: "db"
+      DATABASE_PORT: "5432"
+      DATABASE_USER: "openwebui"
+      DATABASE_PASSWORD: "${POSTGRES_PASSWORD:-openwebui}"
+      DATABASE_NAME: "openwebui"
       OPENWEBUI_PORT: "8080"
       WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY:-dev-secret-key-change-me}"
     volumes:
