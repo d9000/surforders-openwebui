@@ -51,7 +51,8 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          printf '%s\n' "$DEPLOY_HOST_KEY" > ~/.ssh/known_hosts
+          touch ~/.ssh/known_hosts
+          grep -Fqx "$DEPLOY_HOST_KEY" ~/.ssh/known_hosts || printf '%s\n' "$DEPLOY_HOST_KEY" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
       - name: Validate Kamal config
