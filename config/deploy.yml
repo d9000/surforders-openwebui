@@ -47,10 +47,10 @@ env:
     DATABASE_HOST: "openwebui-db"
     DATABASE_PORT: "5432"
     DATABASE_USER: "openwebui"
-    DATABASE_PASSWORD: <%= ENV.fetch("POSTGRES_PASSWORD").dump %>
     DATABASE_NAME: "openwebui"
     OPENWEBUI_PORT: "8080"
   secret:
+    - DATABASE_PASSWORD
     - WEBUI_SECRET_KEY
 
 volumes:
