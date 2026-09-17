@@ -39,4 +39,9 @@ elif [[ -z "${DATABASE_URL:-}" && "$have_any_db_var" == true && "$missing_db_var
   exit 1
 fi
 
+if [[ "${OPENWEBUI_START_WRAPPER_SELFTEST:-0}" == "1" ]]; then
+  printf '%s\n' "${DATABASE_URL:-}"
+  exit 0
+fi
+
 exec bash start.sh
