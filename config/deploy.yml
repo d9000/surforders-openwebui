@@ -18,7 +18,7 @@
 %>
 service: openwebui
 
-image: <%= ENV["DOCKER_HUB_USER"] %>/openwebui
+image: <%= ENV["KAMAL_REGISTRY_USERNAME"] || ENV["DOCKER_HUB_USER"] %>/openwebui
 
 servers:
   web:
@@ -37,8 +37,8 @@ proxy:
 deploy_timeout: 300
 
 registry:
-  username: <%= ENV["DOCKER_HUB_USER"] %>
-  password: <%= ENV["DOCKER_HUB_TOKEN"] %>
+  username: <%= ENV["KAMAL_REGISTRY_USERNAME"] || ENV["DOCKER_HUB_USER"] %>
+  password: <%= ENV["KAMAL_REGISTRY_PASSWORD"] || ENV["DOCKER_HUB_TOKEN"] %>
 
 env:
   clear:
