@@ -26,7 +26,7 @@ This repository now follows the same deployment shape as the Surforders Odoo rep
 - `POSTGRES_PASSWORD`
 - `WEBUI_SECRET_KEY`
 
-`POSTGRES_PASSWORD` is used both by the PostgreSQL accessory and by OpenWebUI's `DATABASE_PASSWORD`.
+`POSTGRES_PASSWORD` is used both by the PostgreSQL accessory and by OpenWebUI's `DATABASE_PASSWORD`. The image entrypoint converts the split `DATABASE_*` settings into a safe `DATABASE_URL` before boot.
 `DEPLOY_HOST_KEY` should be the exact `known_hosts` line for the VPS, so CI does not trust a host key fetched at deploy time.
 
 ## VPS preparation
@@ -89,7 +89,7 @@ kamal app details
 The application health endpoint is:
 
 ```text
-/api/v1/health
+/health
 ```
 
 ## Local development

@@ -2,7 +2,7 @@
 
 Standalone OpenWebUI deployment for Surforders AI. Independent from the [surforders](https://github.com/d9000/surforders) Rails app — separate repo, Kamal stack, and secrets.
 
-- **Production:** `https://openwebui.surforders.com` (Kamal + `ghcr.io/open-webui/open-webui` image)
+- **Production:** `https://openwebui.surforders.com` (Kamal + Docker Hub image built from this repo's Dockerfile)
 - **Deploy automation:** GitHub Actions → Kamal 2 → Docker Hub image push → VPS
 - **Database:** PostgreSQL 16 (Kamal accessory)
 - **Local dev:** `docker compose up`
@@ -88,13 +88,14 @@ docker compose down -v
 ## Layout
 
 ```
-Dockerfile                    # FROM ghcr.io/open-webui/open-webui + healthcheck
+Dockerfile                    # extends the official OpenWebUI image for deploy/runtime wiring
 docker-compose.yml            # local dev
 config/deploy.yml             # Kamal production
 .kamal/secrets                # passthrough map for Kamal secrets
 .github/workflows/deploy.yml  # CI deploy workflow
 .env.example                  # environment variables template
 bin/deploy                    # kamal deploy wrapper
+bin/start-openwebui           # builds DATABASE_URL safely before boot
 ```
 
 ## Notes
@@ -102,3 +103,4 @@ bin/deploy                    # kamal deploy wrapper
 - Runtime is the **official** OpenWebUI image; Dockerfile can add custom configuration
 - Postgres is not exposed publicly — only OpenWebUI goes through kamal-proxy on 443
 - This repo now follows the same deployment shape as the Surforders Odoo project
+- Health checks use OpenWebUI's `/health` endpoint

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+db_vars=(
+  DATABASE_TYPE
+  DATABASE_HOST
+  DATABASE_PORT
+  DATABASE_USER
+  DATABASE_PASSWORD
+  DATABASE_NAME
+)
+
+missing_db_var=false
+have_any_db_var=false
+
+for var_name in "${db_vars[@]}"; do
+  if [[ -n "${!var_name:-}" ]]; then
+    have_any_db_var=true
+  else
+    missing_db_var=true
+  fi
+done
+
+if [[ -z "${DATABASE_URL:-}" && "$have_any_db_var" == true && "$missing_db_var" == false ]]; then
+  export DATABASE_URL
+  DATABASE_URL="$(python3 - <<'PY'
+import os
+from urllib.parse import quote
+
+print(
+    f"{os.environ['DATABASE_TYPE']}://"
+    f"{quote(os.environ['DATABASE_USER'], safe='')}:{quote(os.environ['DATABASE_PASSWORD'], safe='')}"
+    f"@{os.environ['DATABASE_HOST']}:{os.environ['DATABASE_PORT']}/{os.environ['DATABASE_NAME']}"
+)
+PY
+)"
+elif [[ -z "${DATABASE_URL:-}" && "$have_any_db_var" == true && "$missing_db_var" == true ]]; then
+  echo "DATABASE_URL is unset and DATABASE_* values are incomplete." >&2
+  exit 1
+fi
+
+exec bash start.sh

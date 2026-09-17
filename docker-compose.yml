@@ -14,7 +14,9 @@ services:
       retries: 10
 
   openwebui:
-    image: ghcr.io/open-webui/open-webui:latest
+    build:
+      context: .
+    image: surforders-openwebui:local
     depends_on:
       db:
         condition: service_healthy

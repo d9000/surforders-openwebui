@@ -30,7 +30,7 @@ proxy:
   host: openwebui.surforders.com
   app_port: 8080
   healthcheck:
-    path: /api/v1/health
+    path: /health
     interval: 5
     timeout: 10
 
