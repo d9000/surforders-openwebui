@@ -23,6 +23,7 @@ jobs:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       WEBUI_SECRET_KEY: ${{ secrets.WEBUI_SECRET_KEY }}
     steps:
       - name: Check out repository
