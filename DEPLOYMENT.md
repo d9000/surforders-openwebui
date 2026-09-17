@@ -48,6 +48,8 @@ On your machine:
 ```bash
 cp .env.example .env
 gem install kamal -v 2.3.0
+eval "$(ssh-agent -s)"
+ssh-add /path/to/your/deploy_key
 ./bin/deploy
 ```
 
@@ -59,6 +61,8 @@ gem install kamal -v 2.3.0
 - `DOCKER_HUB_TOKEN`
 - `POSTGRES_PASSWORD`
 - `WEBUI_SECRET_KEY`
+
+Your local SSH agent must have the deploy key loaded, and the VPS host key should already be present in `~/.ssh/known_hosts`.
 
 ## CI deploy
 

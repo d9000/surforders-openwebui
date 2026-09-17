@@ -55,8 +55,12 @@ Or deploy manually from your machine with a populated `.env`:
 ```bash
 cp .env.example .env
 gem install kamal -v 2.3.0
+eval "$(ssh-agent -s)"
+ssh-add /path/to/your/deploy_key
 ./bin/deploy
 ```
+
+Your local SSH client must already trust the VPS host key, typically via `~/.ssh/known_hosts`.
 
 ## Connect external apps
 
