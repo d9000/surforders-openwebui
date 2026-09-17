@@ -19,8 +19,9 @@ Standalone OpenWebUI deployment for Surforders AI. Independent from the [surford
 ```bash
 cp .env.example .env
 docker compose up -d
-open http://localhost:8080
 ```
+
+Then visit `http://localhost:8080` in your browser.
 
 ## Production deploy
 
