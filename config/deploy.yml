@@ -50,6 +50,7 @@ env:
     DATABASE_NAME: "openwebui"
     OPENWEBUI_PORT: "8080"
   secret:
+    - POSTGRES_PASSWORD
     - DATABASE_PASSWORD
     - WEBUI_SECRET_KEY
 
